@@ -1514,7 +1514,7 @@ main(const int argc, const char* argv[]) {
   lAttrStatCnt._max      = 7;
   lAttrStatCnt._nodv     = 7;
   lAttrStatCnt._dist_param._mean     = 4.0;
-  lAttrStatCnt._dist_param._std_dev  = 2.160246899469287;
+  lAttrStatCnt._dist_param._std_dev  = 2.00;
   lAttrStatCnt._dist_param._skewness = 0;
   lAttrStatCnt._is_int      = true;
   lAttrStatCnt._is_ui_dense = true;
