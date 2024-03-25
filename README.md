@@ -1,4 +1,5 @@
 # having
+0) untar having_data.tgz
 1) compile with make
 2) call in this directory:
    ./main_having
