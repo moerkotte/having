@@ -80,9 +80,9 @@ EstHavingBeta::estimate_cnt_between(const uint aLbCnt, const uint aUbCnt) const 
   }
 
   if((max_Cnt() + 0.5) <= lUbCnt) {
-    u = _dist_Cnt.get_cdf((double) lUbCnt);
-  } else {
     u = _dist_Cnt.get_cdf((double) lUbCnt + 0.5);
+  } else {
+    u = _dist_Cnt.get_cdf((double) lUbCnt);
   }
   return ((double) nodv_A() * (u - l));
 }
