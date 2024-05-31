@@ -617,7 +617,7 @@ test5(const SimpleProfileGbH& aSimpEst,
   std::cout << "---------------------------" << std::endl;
   double    lQErr0 = 0;
   double_vt lQErr1;
-  lQErr0 = run_loop_sum_eq_a(          aTpchEst,             1, 200, 1, false);
+  lQErr0 = run_loop_sum_eq_a(          aTpchEst,             1, 200, 1, 7.77, false);
 /*
   const bool lTraceLoopB = false;
   if(lTraceLoopB) {
