@@ -153,7 +153,7 @@ test1(const TpchEst& aTpchEst) {
 double
 run_loop_sum_eq_a(const TpchEst& aTpchEst, 
                   const uint aBegin, const uint aEnd, const uint aStep, 
-                  const bool aTrace, const double aQErrLim = 0) {
+                  const double aQErrLim, const bool aTrace) {
   double lQErrMax = 0;
   if(aTrace) {
     std::cout << "estimates for equality queries:" << std::endl;
@@ -213,13 +213,13 @@ test2(const bool aProduceProbTable) {
   std::cout << "checking sum(l_quantity) = b" << std::endl;
   std::cout << "----------------------------" << std::endl;
   std::cout << "max-qerr in loop b in 1-199: "
-            << run_loop_sum_eq_a(lTpchEst, 1, 200, 1, false)
+            << run_loop_sum_eq_a(lTpchEst, 1, 200, 1, 7.77, false)
             << std::endl;
   std::cout << "max-qerr in loop b in 200-249: "
-            << run_loop_sum_eq_a(lTpchEst, 200, 250, 1, false)
+            << run_loop_sum_eq_a(lTpchEst, 200, 250, 1, 7.77, false)
             << std::endl;
   std::cout << "max-qerr in loop b in 250-300: "
-            << run_loop_sum_eq_a(lTpchEst, 250, 299, 1, false)
+            << run_loop_sum_eq_a(lTpchEst, 250, 299, 1, 7.77, false)
             << std::endl;
 
   const double lMaxQErrAllowed = 1.5;
@@ -521,7 +521,7 @@ run_loop_sum_eq_c(const SimpleProfileGbH& aSimpleEst,
                   const EstHavingFentSn&  aEstFentSn,
                   const EstHavingBeta&    aEstBeta,
                   const uint aBegin, const uint aEnd, const uint aStep,
-                  const bool aTrace, const double aQErrLim = 0) {
+                  const double aQErrLim, const bool aTrace) {
   const uint lNoEst = 7;
   double    lEst[lNoEst];
   double    lQEr[lNoEst];
@@ -623,7 +623,7 @@ test5(const SimpleProfileGbH& aSimpEst,
   if(lTraceLoopB) {
     std::cout << "BEGIN TRACE" << std::endl;
   }
-  lQErr1 = run_loop_sum_eq_b(aSimpEst, aTpchEst, aEstFentSn, aEstBeta, 1, 200, 1, lTraceLoopB);
+  lQErr1 = run_loop_sum_eq_b(aSimpEst, aTpchEst, aEstFentSn, aEstBeta, 1, 200, 1, 7.77, lTraceLoopB);
   if(lTraceLoopB) {
     std::cout << "END TRACE" << std::endl;
   }
@@ -643,8 +643,8 @@ test5(const SimpleProfileGbH& aSimpEst,
             << std::endl;
 
   for(const auto& lRange : lRangesB) {
-    lQErr0 = run_loop_sum_eq_a(          aTpchEst,             lRange.min(), lRange.max(), 1, false);
-    lQErr1 = run_loop_sum_eq_b(aSimpEst, aTpchEst, aEstFentSn, aEstBeta, lRange.min(), lRange.max(), 1, false);
+    lQErr0 = run_loop_sum_eq_a(          aTpchEst,             lRange.min(), lRange.max(), 1, 7.77, false);
+    lQErr1 = run_loop_sum_eq_b(aSimpEst, aTpchEst, aEstFentSn, aEstBeta, lRange.min(), lRange.max(), 1, 7.77, false);
     std::cout << "  max-qerr for b in " << std::setw(3) << lRange << ": "
               << ' ' << std::setw(8) << mt::roundXXt(lQErr0)
               << ' ' << std::setw(8) << mt::roundXXt(lQErr1[0])
@@ -674,7 +674,7 @@ test5(const SimpleProfileGbH& aSimpEst,
   // for(const auto& lRange : lRangesB)
   for(uint i = 0; i < lRangesB.size(); ++i) {
     const range_t& lRange = lRangesB[i];
-    lQErr1 = run_loop_sum_eq_c(aSimpEst, aTpchEst, aEstFentSn, aEstBeta, lRange.min(), lRange.max(), 1, false);
+    lQErr1 = run_loop_sum_eq_c(aSimpEst, aTpchEst, aEstFentSn, aEstBeta, lRange.min(), lRange.max(), 1, 7.77, false);
     lTable[i] = lQErr1;
     std::cout << "  max-qerr for b in " << std::setw(3) << lRange << ":";
     for(uint i = 0; i < lQErr1.size(); ++i) {
@@ -712,7 +712,7 @@ test5(const SimpleProfileGbH& aSimpEst,
 
   const double lMaxQErrAllowed = 1.5;
   std::cout << "  all cases where q-error > " << lMaxQErrAllowed << " for b in [1,350]:" << std::endl;
-  run_loop_sum_eq_b(aSimpEst, aTpchEst, aEstFentSn, aEstBeta, 1, 351, 1, true, lMaxQErrAllowed);
+  run_loop_sum_eq_b(aSimpEst, aTpchEst, aEstFentSn, aEstBeta, 1, 351, 1, lMaxQErrAllowed, true);
 
 
   double    lTrue = 0;
